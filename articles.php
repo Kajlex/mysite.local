@@ -15,6 +15,7 @@
 		?>
 		<tr>
 			<td colspan="2">
+				<hr />
 					<table cellpadding="0" cellspacing="0" id="content">
 						<tr>
 							<td>
