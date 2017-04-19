@@ -20,10 +20,20 @@
 	{
 		global $mysqli;
 		connectDB();
-		$result_set = $mysqli->query("SELECT * FROM `articles` WHERE `id`='id'");
+		$result_set = $mysqli->query("SELECT * FROM `articles` WHERE `id`={$id}");
 		closeDB();
 		return $result_set->fetch_assoc();
 	}
+
+	function getAllGuestBookComments()
+	{
+		global $mysqli;
+		connectDB();
+		$result_set = $mysqli->query("SELECT * FROM `guestbook`");
+		closeDB();
+		return resultSetToArray($result_set);
+	}
+
 	function resultSetToArray($result_set)
 	{
 		$array = array();
@@ -32,6 +42,15 @@
 			$array[] = $row; 
 		}
 		return $array;
+	}
+
+	function addGuestBookComment($name, $comment)
+	{
+		global $mysqli;
+		connectDB();
+		$success = $mysqli->query("INSERT INTO `guestbook` (`name`, `comment`) VALUES ('$name', '$comment')");
+		closeDB();
+		return $success;
 	}
 
 	function closeDB()
