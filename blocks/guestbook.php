@@ -23,6 +23,7 @@
 <h2>Записи в гостевой книге</h2>
 <div>
 	<?php
+		$start = microtime(true);
 		if (!empty($_POST["button_questbook"])) 
 		{
 			$name = htmlspecialchars($_POST["name"]);
@@ -41,6 +42,7 @@
 				include "alert.php";
 			}
 		}
+		unset($success);
 		$comments = getAllGuestBookComments();
 		for ($i=0; $i < count($comments); $i++) 
 		{ 

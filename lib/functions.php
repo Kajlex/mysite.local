@@ -9,11 +9,12 @@
 
 	function getAllArticles()
 	{
-		global $mysqli;
-		connectDB();
-		$result_set = $mysqli->query("SELECT * FROM `articles`");
-		closeDB();
-		return resultSetToArray($result_set);
+		return getAll("articles");
+	}
+
+	function getAllBanners()
+	{
+		return getAll("banners");
 	}
 
 	function getArticle($id)
@@ -27,11 +28,7 @@
 
 	function getAllGuestBookComments()
 	{
-		global $mysqli;
-		connectDB();
-		$result_set = $mysqli->query("SELECT * FROM `guestbook`");
-		closeDB();
-		return resultSetToArray($result_set);
+		return getAll("guestbook");
 	}
 
 	function resultSetToArray($result_set)
@@ -44,6 +41,15 @@
 		return $array;
 	}
 
+	function getAll($table)
+	{
+		global $mysqli;
+		connectDB();
+		$result_set = $mysqli->query("SELECT * FROM `$table`");
+		closeDB();
+		return resultSetToArray($result_set);
+	}
+
 	function addGuestBookComment($name, $comment)
 	{
 		global $mysqli;
@@ -51,6 +57,31 @@
 		$success = $mysqli->query("INSERT INTO `guestbook` (`name`, `comment`) VALUES ('$name', '$comment')");
 		closeDB();
 		return $success;
+	}
+
+	function addUser($email, $password)
+	{
+		global $mysqli;
+		connectDB();
+		$success = $mysqli->query("INSERT INTO `users` (`email`, `password`) VALUES ('$email', '$password')");
+		closeDB();
+		return $success;
+	}
+
+	function checkUser($email, $password)
+	{
+		global $mysqli;
+		connectDB();
+		$result_set = $mysqli->query("SELECT * FROM `users` WHERE `email`='$email' AND `password`='$password'");
+		closeDB();
+		if ($result_set->fetch_assoc())
+		{
+			return true; 
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	function closeDB()

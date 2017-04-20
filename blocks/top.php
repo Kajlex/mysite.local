@@ -31,24 +31,15 @@
 		</table>
 	</td>
 	<td class="right">
-		<form name="auth" action="auth.php" method="post">
-			<table>
-				<tr>
-					<td>E-mail:</td>
-					<td>
-						<input type="text" name="email" />
-					</td>
-					<td>Пароль:</td>
-					<td>
-						<input type="password" name="password" />
-					</td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<input type="submit" name="button_auth" value="Войти" />
-					</td>
-				</tr>
-			</table>
-		</form>
+		<?php
+			if (checkUser($_SESSION["email"], $_SESSION["password"]))
+			{
+				require_once "blocks/user_panel.php";
+			}
+			else
+			{
+				require_once "blocks/auth_form.php";
+			}
+		?>
 	</td>
 </tr>
